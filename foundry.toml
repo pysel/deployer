@@ -4,3 +4,10 @@ out = "out"
 libs = ["lib"]
 
 # See more config options https://github.com/foundry-rs/foundry/blob/master/crates/config/README.md#all-options
+remappings = [
+    "forge-std/=lib/forge-std/",
+    "v2-core/=lib/v2-core/",
+    "openzeppelin-contracts/=lib/openzeppelin-contracts/",
+    "v2-periphery/=lib/v2-periphery/",
+    "1inch-v2-contracts/=lib/1inch-v2-contracts/"
+]
