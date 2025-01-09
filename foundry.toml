@@ -7,7 +7,8 @@ libs = ["lib"]
 remappings = [
     "forge-std/=lib/forge-std/src/",
     "v2-core/=lib/v2-core/",
-    "@openzeppelin/=lib/openzeppelin-contracts/contracts/",
+    "@openzeppelin-contracts/=lib/openzeppelin-contracts/contracts/",
     "v2-periphery/=lib/v2-periphery/",
-    "1inch-v2-contracts/=lib/1inch-v2-contracts/"
+    "1inch-v2-contracts/=lib/1inch-v2-contracts/",
+    "ens-contracts/=lib/ens-contracts/contracts/"
 ]

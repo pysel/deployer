@@ -13,3 +13,6 @@
 [submodule "lib/1inch-v2-contracts"]
 	path = lib/1inch-v2-contracts
 	url = https://github.com/1inch/1inch-v2-contracts
+[submodule "lib/ens-contracts"]
+	path = lib/ens-contracts
+	url = https://github.com/ensdomains/ens-contracts
