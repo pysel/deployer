@@ -14,6 +14,7 @@ contract DecentralandScript is Script {
         vm.startBroadcast(deployerPrivateKey);
 
         TestToken token = new TestToken("TestToken", "TT", 1e30);
+        token.mint(address(this), 1000);
 
         IRoyaltiesManager royaltiesManager = new RoyaltiesManager();
 
@@ -34,21 +35,20 @@ contract DecentralandScript is Script {
     }
 
     function createOrder(address marketplace) public {
-        uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
-
         MarketplaceV2 marketplaceInstance = MarketplaceV2(marketplace);
 
-        vm.startBroadcast(deployerPrivateKey);
+        vm.startBroadcast();
 
-        IERC721Verifiable nft = new TestNFT("TestNFT", "TNFT");
+        TestNFT nft = new TestNFT("TestNFT", "TNFT");
 
+        nft.mint(msg.sender, 1);
         nft.setApprovalForAll(marketplace, true);
 
         marketplaceInstance.createOrder(
             address(nft),
             1,
             1,
-            10
+            block.timestamp + 2 minutes
         );
 
         vm.stopBroadcast();
@@ -63,5 +63,9 @@ contract TestNFT is IERC721Verifiable, ERC721 {
         bytes memory
     ) external view override returns (bool) {
         return true;
+    }
+
+    function mint(address to, uint256 tokenId) public {
+        _mint(to, tokenId);
     }
 }
