@@ -4,13 +4,10 @@ pragma solidity ^0.8.24;
 import "forge-std/Script.sol";
 import "@decentraland/contracts/marketplace/MarketplaceV2.sol";
 import "@decentraland/contracts/managers/RoyaltiesManager.sol";
+import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "../src/Token.sol";
 
 contract DecentralandScript is Script {
-    address public i_token;
-    address public i_royaltiesManager;
-    address public i_marketplace;
-
     function deployMarketplace() public {
         uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
 
@@ -29,14 +26,42 @@ contract DecentralandScript is Script {
             0
         );
 
-        i_token = address(token);
-        i_royaltiesManager = address(royaltiesManager);
-        i_marketplace = address(marketplace);
-
         vm.stopBroadcast();
 
-        console.log("Token:", i_token);
-        console.log("Royalties Manager:", i_royaltiesManager);
-        console.log("Marketplace:", i_marketplace);
+        console.log("Token:", address(token));
+        console.log("Royalties Manager:", address(royaltiesManager));
+        console.log("Marketplace:", address(marketplace));
+    }
+
+    function createOrder(address marketplace) public {
+        uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
+
+        MarketplaceV2 marketplaceInstance = MarketplaceV2(marketplace);
+
+        vm.startBroadcast(deployerPrivateKey);
+
+        IERC721Verifiable nft = new TestNFT("TestNFT", "TNFT");
+
+        nft.setApprovalForAll(marketplace, true);
+
+        marketplaceInstance.createOrder(
+            address(nft),
+            1,
+            1,
+            10
+        );
+
+        vm.stopBroadcast();
+    }
+}
+
+contract TestNFT is IERC721Verifiable, ERC721 {
+    constructor(string memory name_, string memory symbol_) ERC721(name_, symbol_) {}
+
+    function verifyFingerprint(
+        uint256,
+        bytes memory
+    ) external view override returns (bool) {
+        return true;
     }
 }
