@@ -11,10 +11,12 @@ remappings = [
     "1inch-v2-contracts/=lib/1inch-v2-contracts/",
     "ens-contracts/=lib/ens-contracts/contracts/",
     "@ensdomains/=lib/ens-contracts/node_modules/@ensdomains/",
-    "@openzeppelin/=lib/ens-contracts/node_modules/@openzeppelin/",
+    "@openzeppelin/contracts-upgradeable/=lib/openzeppelin-contracts-upgradeable/contracts/",
+    "@openzeppelin/=lib/openzeppelin-contracts/",
     "ds-test/=lib/openzeppelin-contracts/lib/forge-std/lib/ds-test/src/",
     "eth-gas-reporter/=lib/ens-contracts/node_modules/eth-gas-reporter/",
     "hardhat-deploy/=lib/ens-contracts/node_modules/hardhat-deploy/",
     "hardhat/=lib/ens-contracts/node_modules/hardhat/",
-    "@decentraland/=lib/marketplace-contracts/"
+    "@decentraland/=lib/marketplace-contracts/",
+    "@0xPolygonHermez/=lib/zkevm-contracts/"
 ]
