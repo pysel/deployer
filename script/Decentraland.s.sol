@@ -34,24 +34,30 @@ contract DecentralandScript is Script {
         console.log("Marketplace:", address(marketplace));
     }
 
-    function createOrder(address marketplace) public {
+    function createOrders(address marketplace, uint256 tokenIdStart, uint256 tokenIdEnd) public {
         MarketplaceV2 marketplaceInstance = MarketplaceV2(marketplace);
 
         vm.startBroadcast();
 
         TestNFT nft = new TestNFT("TestNFT", "TNFT");
 
-        nft.mint(msg.sender, 1);
-        nft.setApprovalForAll(marketplace, true);
-
-        marketplaceInstance.createOrder(
-            address(nft),
-            1,
-            1,
-            block.timestamp + 2 minutes
-        );
-
         vm.stopBroadcast();
+
+        for (uint256 i = tokenIdStart; i <= tokenIdEnd; i++) {
+            vm.startBroadcast();
+
+            nft.mint(msg.sender, i);
+            nft.setApprovalForAll(marketplace, true);
+
+            marketplaceInstance.createOrder(
+                address(nft),
+                i,
+                1,
+                block.timestamp + 2 minutes
+            );
+
+            vm.stopBroadcast();
+        }
     }
 }
 
